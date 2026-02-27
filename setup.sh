@@ -33,7 +33,6 @@ EOF
 
 #================================================#
 
-
 print_banner_rainbow
 
 DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -74,12 +73,26 @@ install_packages() {
     || { err "Failed installing: $*"; exit 1; }
 }
 
-install_aur() {
-  local pkg="$1"
+install_yay() {
+  if command -v yay >/dev/null 2>&1; then
+    ok "yay already installed."
+    return
+  fi
+
   local tmp
   tmp="$(mktemp -d)"
-  git clone "https://aur.archlinux.org/$pkg.git" "$tmp/$pkg" || return 1
-  (cd "$tmp/$pkg" && makepkg -si --noconfirm)
+
+  git clone https://aur.archlinux.org/yay.git "$tmp/yay" || {
+    err "Failed to clone yay."
+    rm -rf "$tmp"
+    exit 1
+  }
+
+  (
+    cd "$tmp/yay"
+    makepkg -si --noconfirm
+  ) && ok "yay installed." || err "Failed to build yay."
+
   rm -rf "$tmp"
 }
 
@@ -105,6 +118,7 @@ link_configs() {
 
 setup_powerlevel10k() {
   local repo="$HOME/powerlevel10k"
+
   if [ ! -d "$repo" ]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$repo"
   fi
@@ -119,7 +133,7 @@ setup_powerlevel10k() {
 set_default_shell() {
   local zsh_path
   zsh_path="$(command -v zsh || true)"
-  [ -z "$zsh_path" ] && { err "zsh not found."; return; }
+  [ -z "$zsh_path" ] && return
 
   local current
   current="$(getent passwd "$USER" | cut -d: -f7)"
@@ -129,54 +143,38 @@ set_default_shell() {
   fi
 }
 
-install_yay() {
-  if command -v yay >/dev/null 2>&1; then
-    ok "yay already installed."
+set_default_wallpaper() {
+  local wp_dir="$TARGET_DOTS/wallpapers"
+
+  if [ ! -d "$wp_dir" ]; then
+    warn "Wallpapers directory not found: $wp_dir"
     return
   fi
 
-  warn "yay not found. Installing from AUR..."
+  local first_wallpaper
+  first_wallpaper=$(find "$wp_dir" -type f | head -n 1 || true)
 
-  local tmp
-  tmp="$(mktemp -d)"
+  if [ -z "$first_wallpaper" ]; then
+    warn "No wallpapers found."
+    return
+  fi
 
-  git clone https://aur.archlinux.org/yay.git "$tmp/yay" || {
-    err "Failed to clone yay."
-    rm -rf "$tmp"
-    return 1
-  }
-
-  (
-    cd "$tmp/yay"
-    makepkg -si --noconfirm
-  ) && ok "yay installed successfully." \
-    || warn "Failed to build yay."
-
-  rm -rf "$tmp"
+  if command -v hyprctl >/dev/null 2>&1; then
+    hyprctl hyprpaper preload "$first_wallpaper" 2>/dev/null || true
+    hyprctl hyprpaper wallpaper ",$first_wallpaper" 2>/dev/null || true
+    ok "Default wallpaper set."
+  else
+    warn "hyprctl not found. Skipping wallpaper setup."
+  fi
 }
 
-#=================Execution=====================#
+#================= Execution =====================#
 
 info "Starting Arch setup..."
 require_arch
 
-step "1/5: Install core packages"
+step "1/6: Install core packages"
 confirm "Install zsh git base-devel?" && install_packages zsh git base-devel
-
-step "2/5: Install hyprpanel"
-if confirm "Install hyprpanel?"; then
-  install_packages hyprpanel 2>/dev/null \
-    || { warn "Falling back to AUR"; install_aur hyprpanel || warn "AUR failed"; }
-fi
-
-step "3/5: Setup powerlevel10k"
-confirm "Setup powerlevel10k?" && setup_powerlevel10k && ok "powerlevel10k ready"
-
-step "4/5: Deploy dotfiles"
-[ -d "$DOTS_SRC" ] && link_configs || warn "dots directory missing"
-
-step "5/5: Set default shell"
-set_default_shell
 
 step "2/6: Install yay"
 confirm "Install yay (AUR helper)?" && install_yay
@@ -185,12 +183,23 @@ step "3/6: Install hyprpanel"
 if confirm "Install hyprpanel?"; then
   if command -v yay >/dev/null 2>&1; then
     yay -S --noconfirm --needed hyprpanel \
-      && ok "hyprpanel installed via yay." \
+      && ok "hyprpanel installed." \
       || warn "hyprpanel installation failed."
   else
     warn "yay not available; skipping hyprpanel."
   fi
 fi
+
+step "4/6: Setup powerlevel10k"
+confirm "Setup powerlevel10k?" && setup_powerlevel10k && ok "powerlevel10k ready"
+
+step "5/6: Deploy dotfiles"
+[ -d "$DOTS_SRC" ] && link_configs || warn "dots directory missing"
+
+step "6/6: Set default shell"
+set_default_shell
+
+set_default_wallpaper
 
 ok "Setup finished."
 
