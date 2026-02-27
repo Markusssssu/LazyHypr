@@ -1,6 +1,35 @@
 # LazyHypr
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2b16ed69-ae8f-476f-a40b-18aecb2b2929" />
+Минималистичная и легкая сборка Hyprland, ориентированная на эстетику и эффективность. 
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b49560f0-f7ca-47d9-a840-27f7f8d6a4a4" />
+## Основные компоненты
+- Оконный менеджер: Hyprland
+- Панель управления: Waybar
+- Эмулятор терминала: Kitty
+- Лаунчер приложений: Wofi (Wayland fork)
+- Управление уведомлениями: Dunst / Mako
 
+## Внешний вид
+Сборка использует темную цветовую палитру с акцентом на чистые линии и отсутствие лишних визуальных элементов. Конфигурация оптимизирована для работы на мониторах с высоким разрешением.
+
+## Скриншоты
+![Рабочий стол](https://github.com/user-attachments/assets/2b16ed69-ae8f-476f-a40b-18aecb2b2929)
+![Интерфейс системы](https://github.com/user-attachments/assets/b49560f0-f7ca-47d9-a840-27f7f8d6a4a4)
+
+## Установка и использование
+
+### Подготовка
+Убедитесь, что у вас установлены основные зависимости:
+- hyprland
+- waybar
+- kitty
+- wofi
+
+### Копирование файлов
+Склонируйте репозиторий и перенесите настройки в вашу домашнюю директорию:
+
+```bash
+git clone git@github.com:Markusssssu/LazyHypr.git
+cd LazyHypr
+chmod +x ./setup.sh
+./setup.sh

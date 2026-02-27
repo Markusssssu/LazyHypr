@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+#=================Print Banner=====================#
+
 print_banner_rainbow() {
   local colors=("\e[31m" "\e[33m" "\e[32m" "\e[36m" "\e[34m" "\e[35m") # R O Y G B P
   local i=0
@@ -28,6 +30,9 @@ print_banner_rainbow() {
 #################################################
 EOF
 }
+
+#================================================#
+
 
 print_banner_rainbow
 
@@ -150,7 +155,7 @@ install_yay() {
   rm -rf "$tmp"
 }
 
-### ---- Execution ----
+#=================Execution=====================#
 
 info "Starting Arch setup..."
 require_arch
@@ -188,3 +193,5 @@ if confirm "Install hyprpanel?"; then
 fi
 
 ok "Setup finished."
+
+#================================================#
