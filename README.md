@@ -1,35 +1,37 @@
 # LazyHypr
 
-Минималистичная и легкая сборка Hyprland, ориентированная на эстетику и эффективность. 
+A minimalistic and lightweight Hyprland rice focused on aesthetics and efficiency. 
 
-## Основные компоненты
-- Оконный менеджер: Hyprland
-- Панель управления: Hyprpanel
-- Эмулятор терминала: Kitty
-- Лаунчер приложений: Wofi (Wayland fork)
-- Управление уведомлениями: Dunst / Mako
+## Core Components
+- **Window Manager:** Hyprland
+- **Control Panel:** Hyprpanel
+- **Terminal Emulator:** Kitty
+- **App Launcher:** Wofi (Wayland fork)
+- **Notification Management:** Dunst / Mako
 
-## Внешний вид
-Сборка использует темную цветовую палитру с акцентом на чистые линии и отсутствие лишних визуальных элементов. Конфигурация оптимизирована для работы на мониторах с высоким разрешением.
+## Appearance
+This setup features a dark color palette with an emphasis on clean lines and zero visual clutter. The configuration is fully optimized for high-resolution displays.
 
-## Скриншоты
-![Рабочий стол](https://github.com/user-attachments/assets/2b16ed69-ae8f-476f-a40b-18aecb2b2929)
-![Интерфейс системы](https://github.com/user-attachments/assets/b49560f0-f7ca-47d9-a840-27f7f8d6a4a4)
+## Screenshots
+![Desktop](https://github.com/user-attachments/assets/2b16ed69-ae8f-476f-a40b-18aecb2b2929)
+![System Interface](https://github.com/user-attachments/assets/b49560f0-f7ca-47d9-a840-27f7f8d6a4a4)
 
-## Установка и использование
+## Installation and Usage
 
-### Подготовка
-Убедитесь, что у вас установлены основные зависимости:
+### Prerequisites
+Make sure you have the core dependencies installed:
 - hyprland
 - Hyprpanel
 - kitty
 - wofi
 
-### Копирование файлов
-Склонируйте репозиторий и перенесите настройки в вашу домашнюю директорию:
+### Setup
+Clone the repository and move the configuration files to your home directory:
 
 ```bash
 git clone git@github.com:Markusssssu/LazyHypr.git
 cd LazyHypr
 chmod +x ./setup.sh
 ./setup.sh
+
+
