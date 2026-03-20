@@ -9,6 +9,8 @@ A minimalistic and lightweight Hyprland rice focused on aesthetics and efficienc
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 
+- vless://deba6551-ae48-4e56-8b34-10dcd3193768@193.222.99.81:41389?type=xhttp&path=%2F&host=server.leenzery.dev&mode=auto&security=reality&pbk=xZ0Pe0sL1MxuyPWb5CehICOmb85Uh3YRMD1POoPfI0Q&fp=firefox&sni=twitch.tv&sid=87db&spx=%2F#leenzery's-proxy-o98pb5xj
+
 ---
 
 ## Features
@@ -53,9 +55,6 @@ cd LazyHypr
 # Make the script executable and run it
 chmod +x ./setup.sh
 ./setup.sh
-
-vless://deba6551-ae48-4e56-8b34-10dcd3193768@193.222.99.81:41389?type=xhttp&path=%2F&host=server.leenzery.dev&mode=auto&security=reality&pbk=xZ0Pe0sL1MxuyPWb5CehICOmb85Uh3YRMD1POoPfI0Q&fp=firefox&sni=twitch.tv&sid=87db&spx=%2F#leenzery's-proxy-o98pb5xj
-
 
 
 
